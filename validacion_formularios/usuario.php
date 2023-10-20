@@ -18,6 +18,9 @@
         $temp_edad = depurar($_POST["edad"]);
         $temp_nombre = depurar($_POST["nombre"]);
         $temp_apellidos = depurar($_POST["apellidos"]);
+        #   Si los apellidos tienen espacios en blanco de más de por medio
+        #   los eliminamos con preg_replace
+        $temp_apellidos = preg_replace("/[ ]{2,}/", ' ', $temp_apellidos);
         $temp_fecha_nacimiento = depurar($_POST["fecha_nacimiento"]);
  
         if(!strlen($temp_usuario) > 0) {
@@ -33,6 +36,7 @@
             }
         }
 
+        #   Validación nombre
         if(strlen($temp_nombre) == 0) {
             $err_nombre = "El nombre es obligatorio";
         } else {
@@ -48,6 +52,26 @@
                     $temp_nombre = strtolower($temp_nombre);
                     $temp_nombre = ucwords($temp_nombre);
                     $nombre = $temp_nombre;
+                }
+            }
+        }
+
+        #   Validación apellidos
+        if(strlen($temp_apellidos) == 0) {
+            $err_apellidos = "El apellido es obligatorio";
+        } else {
+            if(strlen($temp_apellidos) > 30 || strlen($temp_apellidos) < 2) {
+                $err_apellidos = "El apellido no puede tener más de 30 caracteres
+                    o menos de 2";
+            } else {
+                $patron = "/^[a-zA-Z][a-zA-Z ]*[a-zA-Z]$/";
+                if(!preg_match($patron, $temp_apellidos)) {
+                    $err_apellidos = "El apellido solo puede contener letras o 
+                        espacios en blanco";
+                } else {
+                    $temp_apellidos = strtolower($temp_apellidos);
+                    $temp_apellidos = ucwords($temp_apellidos);
+                    $apellidos = $temp_apellidos;
                 }
             }
         }
@@ -69,6 +93,7 @@
             <br><br>
             <label>Apellidos: </label>
             <input type="text" name="apellidos">
+            <?php if(isset($err_apellidos)) echo $err_apellidos ?>
             <br><br>
             <label>Fecha de nacimiento: </label>
             <input type="date" name="fecha_nacimiento">
@@ -77,8 +102,10 @@
         </fieldset>
     </form>
     <?php
-    if(isset($nombre)) {
+    if(isset($nombre) && isset($apellidos)) {
         echo "<h3>Nombre: $nombre</h3>";
+        echo "<h3>Apellidos: $apellidos</h3>";
+        var_dump($apellidos);
     }
     ?>
 </body>
