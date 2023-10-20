@@ -30,7 +30,7 @@
             if(!strlen($temp_precio) > 0) {
                 $err_precio = "El precio es obligatorio";
             } else {
-                if(!filter_var($temp_precio, FILTER_VALIDATE_FLOAT)) {
+                if(filter_var($temp_precio, FILTER_VALIDATE_FLOAT) === FALSE) {
                     $err_precio = "El precio debe ser un número";
                 } else {
                     //var_dump($temp_precio);
