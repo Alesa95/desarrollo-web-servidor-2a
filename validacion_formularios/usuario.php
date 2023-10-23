@@ -32,7 +32,6 @@
                     y contener solamente letras o números";
             } else {
                 $usuario = $temp_usuario;
-                echo $usuario;
             }
         }
 
