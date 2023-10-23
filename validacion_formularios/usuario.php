@@ -15,7 +15,6 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
         $temp_usuario = depurar($_POST["usuario"]);
-        $temp_edad = depurar($_POST["edad"]);
         $temp_nombre = depurar($_POST["nombre"]);
         $temp_apellidos = depurar($_POST["apellidos"]);
         #   Si los apellidos tienen espacios en blanco de más de por medio
@@ -23,6 +22,7 @@
         $temp_apellidos = preg_replace("/[ ]{2,}/", ' ', $temp_apellidos);
         $temp_fecha_nacimiento = depurar($_POST["fecha_nacimiento"]);
  
+        #   Validación usuario
         if(!strlen($temp_usuario) > 0) {
             $err_usuario = "El nombre de usuario es obligatorio";
         } else {
@@ -75,6 +75,32 @@
                 }
             }
         }
+
+        #   Validación fecha de nacimiento
+        if(strlen($temp_fecha_nacimiento) == 0) {
+            $err_fecha_nacimiento = "La fecha de nacimiento es obligatoria";
+        } else {
+            $fecha_actual = date("Y-m-d");
+            list($anyo_actual, $mes_actual, $dia_actual) = explode('-', $fecha_actual);
+            list($anyo, $mes, $dia) = explode('-', $temp_fecha_nacimiento);
+            if($anyo_actual - $anyo > 18) {
+                $fecha_nacimiento = $temp_fecha_nacimiento;
+            } else if($anyo_actual - $anyo < 18) {
+                $err_fecha_nacimiento = "No puedes ser menor de edad";
+            } else {
+                if($mes_actual - $mes > 0) {
+                    $fecha_nacimiento = $temp_fecha_nacimiento;
+                } else if($mes_actual - $mes < 0) {
+                    $err_fecha_nacimiento = "No puedes ser menor de edad";
+                } else {
+                    if($dia_actual - $dia >= 0) {
+                        $fecha_nacimiento = $temp_fecha_nacimiento;
+                    }else{
+                        $err_fecha_nacimiento = "No puedes ser menor de edad";
+                    }
+                }
+            }
+        }
     }
     ?>
 
@@ -83,9 +109,6 @@
             <label>Usuario: </label>
             <input type="text" name="usuario">
             <?php if(isset($err_usuario)) echo $err_usuario ?>
-            <br><br>
-            <label>Edad: </label>
-            <input type="text" name="edad">
             <br><br>
             <label>Nombre: </label>
             <input type="text" name="nombre">
@@ -97,15 +120,18 @@
             <br><br>
             <label>Fecha de nacimiento: </label>
             <input type="date" name="fecha_nacimiento">
+            <?php if(isset($err_fecha_nacimiento)) echo $err_fecha_nacimiento ?>
             <br><br>
             <input type="submit" value="Registrarse">
         </fieldset>
     </form>
     <?php
-    if(isset($nombre) && isset($apellidos)) {
+    if(isset($usuario) && isset($nombre) && isset($apellidos) && isset($fecha_nacimiento)) {
+
+        echo "<h3>Usuario: $usuario</h3>";
         echo "<h3>Nombre: $nombre</h3>";
         echo "<h3>Apellidos: $apellidos</h3>";
-        var_dump($apellidos);
+        echo "<h3>Fecha de nacimiento: $fecha_nacimiento</h3>";
     }
     ?>
 </body>
