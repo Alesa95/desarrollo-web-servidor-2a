@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="estilo.css" type="text/css" rel="stylesheet">
     <?php require '../funciones/util.php' ?>
+    <?php require '../funciones/conexion_peliculas.php' ?>
 </head>
 <body>
     <?php
@@ -75,6 +76,14 @@
             isset($fecha_estreno) && isset($edad_recomendada)) {
 
             echo "<h1>Exito!</h1>";
+
+            $sql = "INSERT INTO peliculas
+                    VALUES ($id_pelicula, 
+                            '$titulo', 
+                            '$fecha_estreno',
+                            '$edad_recomendada')";
+
+            $conexion -> query($sql);
         }
     }
     ?>
