@@ -6,9 +6,25 @@
     <title>Listado películas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <?php require '../funciones/conexion_peliculas.php' ?>
+    <?php require '../objetos/pelicula.php' ?>
     <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 <body>
+    <?php
+    $sql = "SELECT * FROM peliculas";
+    $resultado = $conexion -> query($sql);
+    $peliculas = [];
+
+    while($fila = $resultado -> fetch_assoc()) {
+        $nueva_pelicula = new Pelicula(
+            $fila["id_pelicula"], 
+            $fila["titulo"], 
+            $fila["fecha_estreno"],
+            $fila["edad_recomendada"]
+        );
+        array_push($peliculas, $nueva_pelicula);
+    }
+    ?>
     <div class="container">
         <h1>Listado de películas</h1>
     </div>
@@ -25,15 +41,12 @@
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM peliculas";
-                $resultado = $conexion -> query($sql);
-
-                while($fila = $resultado -> fetch_assoc()) {
+                foreach($peliculas as $pelicula) {
                     echo "<tr>";
-                    echo "<td>" . $fila['id_pelicula'] . "</td>";
-                    echo "<td>" . $fila['titulo'] . "</td>";
-                    echo "<td>" . $fila['fecha_estreno'] . "</td>";
-                    echo "<td>" . $fila['edad_recomendada'] . "</td>";
+                    echo "<td>" . $pelicula -> id_pelicula . "</td>";
+                    echo "<td>" . $pelicula -> titulo . "</td>";
+                    echo "<td>" . $pelicula -> fecha_estreno . "</td>";
+                    echo "<td>" . $pelicula -> edad_recomendada . "</td>";
                     echo "</tr>";
                 }
                 ?>
