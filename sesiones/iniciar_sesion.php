@@ -31,6 +31,9 @@
     
             if($acceso_valido) {
                 echo "NOS HEMOS LOGEADO CON ÉXITO";
+                session_start();
+                $_SESSION["usuario"] = $usuario;
+                header('location: principal.php');
             } else {
                 echo "LA CONTRASEÑA ESTÁ MAL";
             }
