@@ -20,7 +20,18 @@
         } else {
             $temp_edad_recomendada = "";
         }
+
+        //  $_FILES["nombreCampo"]["queQueremosCoger"] -> TYPE, NAME, SIZE, TMP_NAME
+        $nombre_imagen = $_FILES["imagen"]["name"];
+        $tipo_imagen = $_FILES["imagen"]["type"];
+        $tamano_imagen = $_FILES["imagen"]["size"];
+        $ruta_temporal = $_FILES["imagen"]["tmp_name"];
+        //echo $nombre_imagen . " " . $tipo_imagen . " " . $tamano_imagen . " " . $ruta_temporal;
         
+        $ruta_final = "imagenes/" . $nombre_imagen;
+
+        move_uploaded_file($ruta_temporal, $ruta_final);
+
         #   Validación de id_pelicula
         if(strlen($temp_id_pelicula) == 0) {
             $err_id_pelicula = "Campo obligatorio";
@@ -81,7 +92,8 @@
                     VALUES ($id_pelicula, 
                             '$titulo', 
                             '$fecha_estreno',
-                            '$edad_recomendada')";
+                            '$edad_recomendada',
+                            '$ruta_final')";
 
             $conexion -> query($sql);
         }
@@ -90,7 +102,7 @@
     <div class="container">
         <h1>Insertar película</h1>
         <div class="col-6">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label">ID Película: </label>
                     <input class="form-control" type="text" name="id_pelicula">
@@ -114,6 +126,10 @@
                         <option value="16">Mayores de 16 años</option>
                         <option value="18">Mayores de 18 años</option>
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagen</label>
+                    <input class="form-control" type="file" name="imagen">
                 </div>
                 <button class="btn btn-primary" type="submit">Enviar</button>
             </form>
