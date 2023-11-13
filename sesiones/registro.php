@@ -15,7 +15,7 @@
 
         $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
         
-        $sql = "INSERT INTO usuarios VALUES ('$usuario', '$contrasena_cifrada')";
+        $sql = "INSERT INTO usuarios (usuario, contrasena) VALUES ('$usuario', '$contrasena_cifrada')";
     
         $conexion -> query($sql);
     }
