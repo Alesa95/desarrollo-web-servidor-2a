@@ -22,14 +22,6 @@
         $resultado = $sql -> get_result();
         $_conexion -> close(); 
     }
-
-    if($_SERVER["REQUEST_METHOD"] == "GET") {
-        $sql = $_conexion -> prepare("SELECT * FROM videojuegos");
-        $sql -> execute();
-        $resultado = $sql -> get_result();
-        $_conexion -> close();
-    }
-    
     ?>
     <div class="container">
         <h1>Videojuegos</h1>
@@ -40,24 +32,6 @@
                 </div>
                 <div class="col-2">
                     <input class="btn btn-primary" type="submit" value="Buscar">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-1">
-                    <label class="form-label">Filtrar</label>
-                </div>
-                <div class="col-2">
-                    <select class="form-select" name="columna">
-                        <option selected value="titulo">Título</option>
-                        <option value="distribuidora">Distribuidora</option>
-                        <option value="precio">Precio</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                    <select class="form-select" name="orden">
-                        <option selected value="asc">Ascendente</option>
-                        <option value="desc">Descendente</option>
-                    </select>
                 </div>
             </div>
         </form>
