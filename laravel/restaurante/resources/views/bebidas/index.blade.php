@@ -19,13 +19,10 @@
         </thead>
         <tbody>
             @foreach($bebidas as $bebida)
-                @php
-                    list($l_bebida, $l_precio, $l_tipo) = $bebida;
-                @endphp
                 <tr>
-                    <td>{{ $l_bebida }}</td>
-                    <td>{{ $l_precio }}</td>
-                    <td>{{ $l_tipo }}</td>
+                    <td>{{ $bebida->nombre }}</td>
+                    <td>{{ $bebida->precio }}</td>
+                    <td>{{ $bebida->tipo }}</td>
                 </tr>
             @endforeach
         </tbody>

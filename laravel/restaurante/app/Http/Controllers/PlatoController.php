@@ -14,14 +14,14 @@ class PlatoController extends Controller
     {
         $mensaje = "Estos son mis platos";
 
+        $platos = Plato::all();
         /*$platos = [
             ["Tortilla de patatas",4.95,"Ración"],
             ["Chuletillas de cordero",9.95,"Ración"],
             ["Ensaladilla rusa",3.5,"Tapa"]
         ];*/
 
-        $platos = Plato::all();
-
+ 
         return view('platos/index',
             ['mensaje' => $mensaje, 'platos' => $platos]
         );
@@ -32,7 +32,7 @@ class PlatoController extends Controller
      */
     public function create()
     {
-        //
+        return view('platos/create');
     }
 
     /**
@@ -40,7 +40,13 @@ class PlatoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $plato = new Plato;
+        $plato -> nombre = $request -> input('nombre');
+        $plato -> precio = $request -> input('precio');
+        $plato -> tipo = $request -> input('tipo');
+        $plato -> save();
+
+        return redirect('platos');
     }
 
     /**
@@ -48,7 +54,9 @@ class PlatoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $plato = Plato::find($id);
+
+        return view('platos/show', ['plato'=>$plato]);
     }
 
     /**

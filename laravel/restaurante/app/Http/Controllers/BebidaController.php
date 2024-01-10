@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Bebida;
 
 class BebidaController extends Controller
 {
@@ -11,11 +12,12 @@ class BebidaController extends Controller
      */
     public function index()
     {
-        $bebidas = [
+        $bebidas = Bebida::all();
+        /*$bebidas = [
             ["Coca-cola", 1.95, "Refresco"],
             ["Fanta", 1.95, "Refresco"],
             ["Cerveza Medac", 2.45, "Alcohol"]
-        ];
+        ];*/
 
         return view('bebidas/index',['bebidas'=>$bebidas]);
     }
