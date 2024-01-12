@@ -64,7 +64,9 @@ class PlatoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $plato = Plato::find($id);
+
+        return view('platos/edit', ['plato'=>$plato]);
     }
 
     /**
@@ -72,7 +74,14 @@ class PlatoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $plato = Plato::find($id);
+
+        $plato -> nombre = $request -> input('nombre');
+        $plato -> precio = $request -> input('precio');
+        $plato -> tipo = $request -> input('tipo');
+        $plato -> save();
+
+        return redirect('platos');
     }
 
     /**
