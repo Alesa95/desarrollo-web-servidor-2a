@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PlatoController;
 use App\Http\Controllers\BebidaController;
+use App\Http\Controllers\TipoPlatoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::get('/adios', function () {
 });
 
 //Route::get('/platos', [PlatoController::class,'index']);
+
 Route::resource('/platos', PlatoController::class);
 
 Route::resource('/bebidas', BebidaController::class);
+
+Route::resource('/tipos_platos', TipoPlatoController::class);

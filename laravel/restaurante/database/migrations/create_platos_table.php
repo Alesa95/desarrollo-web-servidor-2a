@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->float('precio');
-            $table->string('tipo');
+            $table->unsignedBigInteger('tipo_plato_id');
+            $table->foreign('tipo_plato_id')->references('id')->on('tipo_platos');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Plato;
+use DB;
 
 class PlatoController extends Controller
 {
@@ -89,6 +90,8 @@ class PlatoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('platos')->where('id',"=",$id)->delete();
+        //Plato::find($id)->delete();
+        return redirect('/platos');
     }
 }
