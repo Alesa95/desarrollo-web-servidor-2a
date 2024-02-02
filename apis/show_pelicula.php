@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Películas</title>
+    <title>Document</title>
 </head>
 <body>
     <?php
-    $apiUrl = "http://localhost:8000/api/films";
+    $film_id = $_GET['id'];
+    $apiUrl = "http://localhost:8000/api/films/$film_id";
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $apiUrl);
@@ -15,15 +16,9 @@
     $respuesta = curl_exec($curl);
     $array = json_decode($respuesta, true);
 
-    //print_r($array);
-
-    $peliculas = $array['data'];
-
-    foreach($peliculas as $pelicula) { ?>
-        <h1><?php echo $pelicula['title'] ?></h1>
-        <a href="show_pelicula.php?id=<?php echo $pelicula['film_id'] ?>">
-            Ver película
-        </a>
-    <?php } ?>
+    $pelicula = $array['data'];
+    
+    echo "<h1>" . $pelicula['title'] . "</h1>";
+    ?>
 </body>
 </html>
